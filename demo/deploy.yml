@@ -2,14 +2,12 @@
 - name: Deploy Spring Boot App with Docker
   hosts: servers
   become: yes
-  gather_facts: no
-
   tasks:
     - name: Install required packages
       apt:
         name:
           - docker.io
-          - docker-compose-plugin
+          - docker-compose
         state: present
         update_cache: yes
 
@@ -19,8 +17,9 @@
         groups: docker
         append: yes
 
-    - name: Rebuild and run container using docker compose
-      community.docker.docker_compose:
-        project_src: "/home/{{ lookup('env','USER') }}/spring-app"
-        build: true
+    - name: Build and run container using docker compose v2
+      community.docker.docker_compose_v2:
+        project_src: "{{ playbook_dir }}"
+        build: always
         state: present
+
