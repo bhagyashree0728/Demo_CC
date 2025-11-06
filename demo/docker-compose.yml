@@ -1,9 +1,10 @@
-version: "3.8"
+version: '3.8'
+
 services:
-  springboot-app:
+  spring-app:
     build: .
     image: demo-spring-app:latest
-    container_name: demo-spring-app
+    container_name: spring-app
     ports:
       - "8080:8080"
-    restart: unless-stopped
+    restart: always
